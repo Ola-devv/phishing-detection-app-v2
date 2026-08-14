@@ -1,0 +1,20 @@
+# IMPORTANT: these versions must match what was used to TRAIN the models
+# in Colab, not just any recent version. A scikit-learn/xgboost version
+# mismatch between training and deployment is one of the most common
+# causes of a joblib.load() crash or silent wrong-prediction bug.
+#
+# Run this in the SAME Colab session where you trained the models,
+# right after training, to get your exact versions:
+#
+#   import sklearn, xgboost, pandas, scipy, joblib
+#   print(sklearn.__version__, xgboost.__version__, pandas.__version__,
+#         scipy.__version__, joblib.__version__)
+#
+# Then replace the version numbers below with what that prints.
+
+streamlit==1.61.1
+scikit-learn==1.8.0
+xgboost==3.4.0
+pandas==3.0.2
+scipy==1.17.1
+joblib==1.5.3

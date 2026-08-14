@@ -1,0 +1,18 @@
+# Raw datasets — never commit these, they're huge and don't belong in a code repo
+*.csv
+*.mbox
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Streamlit local config (if you ever add secrets.toml, keep it out of git)
+.streamlit/secrets.toml
