@@ -327,22 +327,30 @@ def get_url_risk_factors(url):
     return reasons
 
 def get_email_risk_factors(subject, body, sender=None):
-    """Returns a list of human-readable reasons contributing to an
-    email's risk score, for explainability in the app UI."""
+    """Returns (risk_reasons, protective_reasons) — two separate lists,
+    so the UI never shows a 'protective' item as if it were the reason
+    for a high risk score. Also signals when the model's decision was
+    likely driven mostly by word-pattern (TF-IDF) signals not covered
+    by these 16 engineered features, so the UI can be honest about that
+    rather than implying this list is the complete explanation."""
     feats = extract_email_features(subject, body, sender)
-    reasons = []
+    risk_reasons = []
+    protective_reasons = []
+
     if feats['credential_request_net_score'] > 0:
-        reasons.append("Directly asks for OTP, BVN, PIN, or password")
+        risk_reasons.append("Directly asks for OTP, BVN, PIN, or password")
     if feats['brand_domain_mismatch']:
-        reasons.append("Mentions a bank name but sender's email domain doesn't match that bank")
+        risk_reasons.append("Mentions a bank name but sender's email domain doesn't match that bank")
     if feats['sender_is_free_email']:
-        reasons.append("Sent from a free email provider (Gmail/Yahoo/etc.) rather than a corporate domain")
+        risk_reasons.append("Sent from a free email provider (Gmail/Yahoo/etc.) rather than a corporate domain")
     if feats['has_suspension']:
-        reasons.append("Uses account suspension/blocking language")
+        risk_reasons.append("Uses account suspension/blocking language")
     if feats['urgency_density'] > 0.05:
-        reasons.append("High density of urgency-inducing language")
+        risk_reasons.append("High density of urgency-inducing language")
     if feats['url_count'] > 0:
-        reasons.append(f"Contains {feats['url_count']} link(s)")
+        risk_reasons.append(f"Contains {feats['url_count']} link(s)")
+
     if feats['credential_request_net_score'] < 0:
-        reasons.append("Contains protective security-warning language (reduces risk)")
-    return reasons
+        protective_reasons.append("Contains protective security-warning language (e.g. \"we will never ask for your OTP\")")
+
+    return risk_reasons, protective_reasons

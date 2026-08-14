@@ -123,12 +123,33 @@ with tab_email:
                 st.success(f"✅ Likely LEGITIMATE")
 
             reasons = get_email_risk_factors(subject_input, body_input, sender_input)
-            if reasons:
-                st.markdown("**Contributing factors:**")
-                for r in reasons:
+            risk_reasons, protective_reasons = reasons
+
+            if risk_reasons:
+                st.markdown("**⚠️ Risk factors:**")
+                for r in risk_reasons:
                     st.markdown(f"- {r}")
-            else:
-                st.markdown("_No notable risk indicators detected._")
+            if protective_reasons:
+                st.markdown("**✅ Protective factors:**")
+                for r in protective_reasons:
+                    st.markdown(f"- {r}")
+            if not risk_reasons and not protective_reasons:
+                st.markdown("_No notable engineered risk indicators detected._")
+
+            # Be honest when the score doesn't line up with the listed
+            # factors — this happens because most of the model's
+            # decision comes from word-pattern (TF-IDF) analysis of the
+            # full text, which isn't reduced to a simple checklist here.
+            if prob >= 0.5 and not risk_reasons:
+                st.caption(
+                    "ℹ️ This risk score is driven mainly by overall word-pattern analysis "
+                    "of the email text, not the specific factors listed above."
+                )
+            elif prob < 0.5 and protective_reasons and risk_reasons:
+                st.caption(
+                    "ℹ️ Both risk and protective signals were present; the overall "
+                    "word-pattern analysis of the text was the deciding factor."
+                )
 
 st.divider()
 st.caption(
