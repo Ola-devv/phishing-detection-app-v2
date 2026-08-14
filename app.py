@@ -47,7 +47,7 @@ except Exception as e:
 def predict_url(url):
     vec = url_features_to_vector(url)
     prob = url_model.predict_proba(vec)[0][1]
-    return prob
+    return float(prob)
 
 def predict_email(subject, body, sender=None):
     text_clean = clean_text_for_tfidf((subject or '') + ' ' + (body or ''))
@@ -57,7 +57,7 @@ def predict_email(subject, body, sender=None):
     # email_features_to_vector already enforces this via EMAIL_FEATURE_ORDER
     combined = hstack([tfidf_vec, csr_matrix(eng_vec.values)]).tocsr()
     prob = email_model.predict_proba(combined)[0][1]
-    return prob
+    return float(prob)
 
 # ── UI ────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Phishing Detection System", page_icon="🛡️")
@@ -85,7 +85,7 @@ with tab_url:
             risk_label, risk_color = get_risk_level(prob)
 
             st.markdown(f"### Risk Score: {pct:.1f}/100 — :{risk_color}[{risk_label}]")
-            st.progress(min(max(prob, 0.0), 1.0))
+            st.progress(float(min(max(prob, 0.0), 1.0)))
 
             if prob >= 0.5:
                 st.error(f"⚠️ Likely PHISHING")
@@ -115,7 +115,7 @@ with tab_email:
             risk_label, risk_color = get_risk_level(prob)
 
             st.markdown(f"### Risk Score: {pct:.1f}/100 — :{risk_color}[{risk_label}]")
-            st.progress(min(max(prob, 0.0), 1.0))
+            st.progress(float(min(max(prob, 0.0), 1.0)))
 
             if prob >= 0.5:
                 st.error(f"⚠️ Likely PHISHING")
