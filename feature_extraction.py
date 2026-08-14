@@ -164,13 +164,15 @@ REQUEST_PATTERNS = [
     r'click here to confirm', r'verify now', r'confirm now',
 ]
 WARNING_PATTERNS = [
-    r"we (will )?never ask", r"will not ask", r"won'?t ask",
+    r"will never ask", r"will not ask", r"won'?t ask",
     r'do not share your', r"don'?t share your",
-    r'never share your', r'never disclose', r'do not disclose',
-    r'never request your', r'we do not request',
-    r'please note that we will never',
+    r'never share your', r'never disclose', r'never be disclosed',
+    r'should (never|not) be disclosed', r'do not disclose',
+    r'never request your', r'we do not request', r'do not request',
+    r'please note.*will never',
     r'beware of (fraudsters|scammers|phishing)',
     r'protect your (otp|pin|password|bvn)',
+    r'(are|is) private and should (never|not) be',
 ]
 URGENCY_WORDS = [
     'urgent', 'immediately', 'suspended', 'expire', 'winner',
