@@ -1,0 +1,278 @@
+[
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Payment receipt",
+    "expected": 0,
+    "subject": "Transfer receipt",
+    "body": "Your transfer of NGN 12500 to Sample Merchant was successful. Reference DEMO001. No action is required. Thank you for banking with us.",
+    "score": 0.2752066439772113,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Credit alert",
+    "expected": 0,
+    "subject": "Credit transaction",
+    "body": "Your account ending 0000 has been credited with NGN 25000. This notification is for your records only. Please check your mobile banking app for details.",
+    "score": 0.30544856401379383,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Debit alert",
+    "expected": 0,
+    "subject": "Debit transaction",
+    "body": "A debit of NGN 3500 was recorded on your account ending 0000 for a supermarket purchase. Keep this notice for your records.",
+    "score": 0.29835612977229736,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Monthly statement",
+    "expected": 0,
+    "subject": "Your monthly statement",
+    "body": "Your monthly account statement is available in your banking app. Open the app as usual to view your transactions. There is no need to reply to this message.",
+    "score": 0.36019944374007307,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "OTP notification",
+    "expected": 0,
+    "subject": "Your verification code",
+    "body": "Your one-time verification code is 123456. It expires in five minutes. Do not share this code with anyone. If you did not initiate this request, contact your bank.",
+    "score": 0.24127575501926282,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Anti-fraud warning",
+    "expected": 0,
+    "subject": "Protect your account",
+    "body": "Never share your password, PIN or OTP with anyone. Your bank will never ask you to disclose these details. Contact your bank through its official channels if you suspect fraud.",
+    "score": 0.40472270115303466,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Password-change notice",
+    "expected": 0,
+    "subject": "Password updated",
+    "body": "Your online banking password was changed successfully. If you made this change, no action is required. Otherwise contact customer support through your banking app.",
+    "score": 0.44937784406309705,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Maintenance notice",
+    "expected": 0,
+    "subject": "Scheduled service maintenance",
+    "body": "Our banking services will be temporarily unavailable between midnight and two tomorrow morning while we perform maintenance. Thank you for your patience.",
+    "score": 0.436100998695104,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "KYC branch notice",
+    "expected": 0,
+    "subject": "Update your customer information",
+    "body": "Please visit any of our branches with a valid identity document to update your customer information. Do not send identification documents, passwords or verification codes by email.",
+    "score": 0.5275054388876846,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Support education",
+    "expected": 0,
+    "subject": "Recognising phishing",
+    "body": "Fraudsters may write: send your password and OTP immediately. This is a phishing attempt. Never follow such instructions or disclose your banking credentials.",
+    "score": 0.5588676086192637,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Ordinary meeting",
+    "expected": 0,
+    "subject": "Project meeting",
+    "body": "Please join our scheduled team meeting tomorrow morning to discuss the project report and update our work plans.",
+    "score": 0.45992852541912527,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_benign",
+    "name": "Research invitation",
+    "expected": 0,
+    "subject": "Seminar invitation",
+    "body": "You are invited to attend our cybersecurity seminar next Friday at the university. The event will discuss banking fraud prevention and safe online practices.",
+    "score": 0.3476451380677434,
+    "predicted": 0
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Urgent password and OTP",
+    "expected": 1,
+    "subject": "Account suspension notice",
+    "body": "Your Access Bank account will be suspended today. Reply with your password, PIN and OTP immediately to prevent account closure.",
+    "score": 0.8057470203208333,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "BVN link lure",
+    "expected": 1,
+    "subject": "BVN validation required",
+    "body": "Dear customer, your BVN has not been validated. Visit https://access-verify.invalid/login and enter your online banking password and OTP to restore access.",
+    "score": 0.7559428917355552,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Polite OTP request",
+    "expected": 1,
+    "subject": "Assistance with your account",
+    "body": "Hello, I am helping with your account update. Please send me the one-time code you just received so I can complete the process for you.",
+    "score": 0.7306073806882993,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Refund password lure",
+    "expected": 1,
+    "subject": "Your refund is ready",
+    "body": "A refund has been approved for your account. Confirm your online banking username and password at https://refund.invalid/claim to receive the payment.",
+    "score": 0.7083572446832171,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Card details lure",
+    "expected": 1,
+    "subject": "Card renewal",
+    "body": "To renew your debit card, reply with the full card number, expiry date, CVV and your card PIN. Our agent will process the renewal today.",
+    "score": 0.8602033783909643,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Safe wording then attack",
+    "expected": 1,
+    "subject": "Account security advice",
+    "body": "We care about your security. Never share your PIN with strangers. To protect this account, enter your password and OTP at https://bank-review.invalid/verify now.",
+    "score": 0.7249398127728077,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "No urgency password request",
+    "expected": 1,
+    "subject": "Routine reconciliation",
+    "body": "For routine account reconciliation, please provide your online banking username and password in a reply to this email.",
+    "score": 0.8027493743606899,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "GTBank verification",
+    "expected": 1,
+    "subject": "GTBank customer review",
+    "body": "Your GTBank profile needs a review. Sign in at https://gtb-review.invalid and provide your password and current token code to complete verification.",
+    "score": 0.7681223795714976,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Zenith credential request",
+    "expected": 1,
+    "subject": "Zenith account update",
+    "body": "Your Zenith account has been restricted. Send your login password and OTP to this email address so our support team can reactivate it.",
+    "score": 0.8360428855078786,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "UBA account lure",
+    "expected": 1,
+    "subject": "UBA account confirmation",
+    "body": "Confirm your UBA login at https://uba-confirm.invalid. Enter your username, password and SMS verification code to avoid losing access.",
+    "score": 0.8322319271562305,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Informal Nigerian wording",
+    "expected": 1,
+    "subject": "Abeg send the code",
+    "body": "Good afternoon boss, na your bank support. Abeg send the OTP wey enter your phone make we finish this account verification for you.",
+    "score": 0.7431051018475312,
+    "predicted": 1
+  },
+  {
+    "kind": "email",
+    "group": "authored_phishing",
+    "name": "Long polite lure",
+    "expected": 1,
+    "subject": "Customer service follow-up",
+    "body": "Thank you for your patience while we reviewed your request. We appreciate your continued relationship with our bank and apologise for the delay. To complete this review, kindly reply with your account password and the one-time verification code sent to your phone. Our team will then confirm that your records have been updated.",
+    "score": 0.7548353361971004,
+    "predicted": 1
+  },
+  {
+    "kind": "eml",
+    "group": "authored_mime",
+    "name": "Hidden credential link",
+    "expected": 1,
+    "raw": "Subject: Customer notification\nMIME-Version: 1.0\nContent-Type: text/html; charset=utf-8\n\n<p>Your account requires verification. Enter your password and OTP to restore access.</p><a href=\"https://access-review.invalid/login\">www.accessbankplc.com</a>",
+    "score": 0.8833138303772332,
+    "predicted": 1
+  },
+  {
+    "kind": "eml",
+    "group": "authored_mime",
+    "name": "HTML benign receipt",
+    "expected": 0,
+    "raw": "Subject: Customer notification\nMIME-Version: 1.0\nContent-Type: text/html; charset=utf-8\n\n<p>Your transfer of NGN 12500 was successful. Reference DEMO002. No action is required.</p>",
+    "score": 0.18916225407560378,
+    "predicted": 0
+  },
+  {
+    "kind": "eml",
+    "group": "authored_mime",
+    "name": "HTML security warning",
+    "expected": 0,
+    "raw": "Subject: Customer notification\nMIME-Version: 1.0\nContent-Type: text/html; charset=utf-8\n\n<p>Never send your password or OTP to anyone. Contact your bank through its official channels if a message requests these details.</p>",
+    "score": 0.37295724343643355,
+    "predicted": 0
+  },
+  {
+    "kind": "eml",
+    "group": "authored_mime",
+    "name": "HTML polite credential lure",
+    "expected": 1,
+    "raw": "Subject: Customer notification\nMIME-Version: 1.0\nContent-Type: text/html; charset=utf-8\n\n<p>Please complete your customer review using your online banking password and token.</p><a href=\"https://customer-review.invalid\">Continue</a>",
+    "score": 0.7913503853505717,
+    "predicted": 1
+  }
+]

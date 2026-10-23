@@ -1,0 +1,26 @@
+{
+  "status": "public release approved by the repository owner on 2026-10-23",
+  "models": {
+    "url": {
+      "algorithm": "XGB",
+      "threshold": 0.6046873927116394,
+      "features": 35
+    },
+    "email": {
+      "algorithm": "LR",
+      "threshold": 0.629481294875887,
+      "engineered_features": 10,
+      "tfidf_cap": 8000
+    }
+  },
+  "file_sha256": {
+    "models/url_bundle.joblib": "fb5a63885f081c471d3a213892a257ab433b5b0d388c979f0076a72b937790e8",
+    "models/email_bundle.joblib": "d3d80caf27b5cfed7b595f61477200d43aa6227e3ca874eb5933cc4a06a3014c"
+  },
+  "feature_sha256": {
+    "features_url.py": "68da1fd9ed1676dde32becc8ac8818b53ea4165873531c020b68f5e8c7068383",
+    "features_email.py": "659a887d6a7a965f1ea2df86891f4d472f00a1cac5a68a465fe96597d977bbcb",
+    "mailbox_reader.py": "5746353e372b143877ea8377855e7e648ed2fc0a252aac452cf8a560fbc06004"
+  },
+  "privacy": "Publication of selected model bundles and evaluation results explicitly approved. Raw datasets, emails and split references remain private."
+}

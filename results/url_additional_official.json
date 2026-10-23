@@ -1,0 +1,50 @@
+[
+  {
+    "url": "https://www.gtbank.com/selfservice",
+    "expected": 0,
+    "score": 0.1742480993270874,
+    "predicted": 0
+  },
+  {
+    "url": "https://www.gtbank.com/personal-banking/ways-to-bank/gtworld-app",
+    "expected": 0,
+    "score": 0.3276665508747101,
+    "predicted": 0
+  },
+  {
+    "url": "https://www.gtbank.com/annual-reports",
+    "expected": 0,
+    "score": 0.11311965435743332,
+    "predicted": 0
+  },
+  {
+    "url": "https://www.zenithbank.com/personal-banking/ways-to-bank/ziva/",
+    "expected": 0,
+    "score": 0.5157110095024109,
+    "predicted": 0
+  },
+  {
+    "url": "https://www.zenithbank.com/zerotohero/",
+    "expected": 0,
+    "score": 0.3151231110095978,
+    "predicted": 0
+  },
+  {
+    "url": "https://www.accessbankplc.com/contact-us/branch-atm-locator",
+    "expected": 0,
+    "score": 0.006836242973804474,
+    "predicted": 0
+  },
+  {
+    "url": "https://www.accessbankplc.com/Rates-Guide/",
+    "expected": 0,
+    "score": 0.20969335734844208,
+    "predicted": 0
+  },
+  {
+    "url": "https://www.ubagroup.com/nigeria/help/contact-us/",
+    "expected": 0,
+    "score": 0.023050790652632713,
+    "predicted": 0
+  }
+]

@@ -108,3 +108,4 @@ def read_mailbox(path):
             yield readable_message(box.get_bytes(key))
     finally:
         box.close()
+

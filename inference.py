@@ -28,9 +28,10 @@ def score_message(b,raw):
  msg=readable_message(raw)
  return score(b,subject=msg['subject'],body=msg['model_body']),msg
 def review_reason(result,subject,body):
- v=e.context_features(subject or '',body or '')
+ v=e.extract_email(subject or '',body or '')
  if len(e.clean_text(body).split())<8:return 'Too little readable text for a dependable assessment.'
  if not result['predicted_label'] and v['direct_secret_request_count']:return 'A sensitive-information request conflicts with the lower model score.'
  warning=any(p.search(((subject or '')+' '+(body or '')).lower()) for p in e.WARN)
  if result['predicted_label'] and (warning or v['educational_secret_request_count']) and not v['direct_secret_request_count']:return 'Protective or educational wording conflicts with the model alert.'
  return None
+

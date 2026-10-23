@@ -171,3 +171,23 @@ def context_features(subject, body):
             'reply_with_secret_count':reply}
 def extract_email(subject, body):
     return {**BASE_EXTRACT_EMAIL(subject,body),**context_features(subject,body)}
+
+
+# Repaired learned inputs; no rule overrides the classifier.
+REPAIRED_ORDER=['url_count','direct_secret_request_count','negated_secret_request_count','educational_secret_request_count','security_warning_count','otp_notice_count','transaction_notice_count','request_and_warning','reply_with_secret_count','has_suspension']
+BROAD_SECRET=re.compile(r'\b(?:otp|one[ -]time\s+(?:password|code)|pin|password|passcode|cvv|verification\s+code|security\s+code|token(?:\s+code)?|card\s+(?:number|details)|complete\s+card\s+details)\b')
+BROAD_REQUEST=re.compile(r'\b(?:enter|provide|send|share|input|supply|disclose|reply\s+with|respond\s+with|submit|give|tell\s+us|forward|return|copy|email)\b')
+def repaired_context(subject,body):
+ text=((subject or '')+'\n'+(body or '')).lower();d=n=e=r=0
+ for clause in re.split(r'[.!?;\n]+|\b(?:but|however|nevertheless|instead)\b',text):
+  for ask in BROAD_REQUEST.finditer(clause):
+   after=clause[ask.end():ask.end()+100]
+   if not BROAD_SECRET.search(after):continue
+   before=clause[:ask.start()];near=' '.join(before.split()[-14:])+' '
+   if re.search(r'\b(?:never|do\s+not|don.t|not\s+to|avoid|refuse\s+to)\s+(?:\w+\s+){0,3}$',near):n+=1
+   elif EDUCATION.search(near) or re.search(r'\b(?:will\s+never|will\s+not|won.t|do\s+not|does\s+not)\s+(?:ask|need|request|require)\b',near):e+=1
+   else:d+=1;r+=int(ask.group() in ['send','share','reply with','respond with','disclose','forward','return','email'])
+ old=context_features(subject,body)
+ return dict(direct_secret_request_count=d,negated_secret_request_count=n,educational_secret_request_count=e,reply_with_secret_count=r,request_and_warning=int(d>0 and any(p.search(text) for p in WARN)),otp_notice_count=old['otp_notice_count'],transaction_notice_count=old['transaction_notice_count'])
+def extract_email(subject,body):return {**BASE_EXTRACT_EMAIL(subject,body),**repaired_context(subject,body)}
+EMAIL_ORDER=REPAIRED_ORDER

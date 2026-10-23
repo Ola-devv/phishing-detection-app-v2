@@ -12,11 +12,11 @@ class ReleaseChecks(unittest.TestCase):
  def setUpClass(cls):cls.url=load_bundle('url');cls.email=load_bundle('email')
  def test_schemas_and_saved_thresholds(self):
   self.assertEqual(len(self.url['transforms']['feature_order']),35)
-  self.assertEqual(len(self.email['transforms']['feature_order']),20)
-  self.assertAlmostEqual(self.url['threshold'],.878675231262895)
-  self.assertAlmostEqual(self.email['threshold'],.6766026020050049)
+  self.assertEqual(len(self.email['transforms']['feature_order']),10)
+  self.assertAlmostEqual(self.url['threshold'],.6046873927116394)
+  self.assertAlmostEqual(self.email['threshold'],.629481294875887)
  def test_saved_email_diagnostics(self):
-  rows=pd.read_csv(ROOT/'results/email_authored_probes_XGB_predictions.csv')
+  rows=pd.read_csv(ROOT/'results/email_authored_probes_predictions.csv')
   raw=json.loads((ROOT/'results/authored_inputs.json').read_text())
   p=[score(self.email,subject=s,body=b)['score'] for _,_,s,b in raw]
   np.testing.assert_allclose(p,rows.score,atol=1e-7)
@@ -35,8 +35,13 @@ class ReleaseChecks(unittest.TestCase):
    with self.assertRaises(ValueError):score(self.url,url=x)
   self.assertFalse(u.bounded_domain_match('evilfcmb.com','fcmb.com'))
   self.assertTrue(u.bounded_domain_match('alerts.fcmb.com','fcmb.com'))
+ def test_previous_live_failures(self):
+  self.assertEqual(score(self.url,url='https://www.gtbank.com/personal-banking/ways-to-bank/internet-banking')['predicted_label'],0)
+  self.assertEqual(score(self.email,subject='Credit transaction',body='Your account ending 0000 has been credited with NGN 25000. This notification is for your records only. Please check your mobile banking app for details.')['predicted_label'],0)
+  self.assertEqual(score(self.email,subject='Card renewal',body='To renew your debit card, reply with the full card number, expiry date, CVV and your card PIN. Our agent will process the renewal today.')['predicted_label'],1)
  def test_review_does_not_change_binary_prediction(self):
   r={'score':.1,'threshold':.6766,'predicted_label':0};old=copy.deepcopy(r)
   self.assertIsNotNone(review_reason(r,'','Enter your password and OTP immediately to restore your account.'))
   self.assertEqual(r,old)
 if __name__=='__main__':unittest.main()
+

@@ -1,22 +1,14 @@
-# Raw datasets — never commit these, they're huge and don't belong in a code repo
-*.csv
+data/
 *.mbox
-
-# Python
+*.eml
+*.pkl
 __pycache__/
 *.pyc
-*.pyo
 .ipynb_checkpoints/
 .venv/
-venv/
-
-# OS junk
-.DS_Store
-Thumbs.db
-
-# Streamlit local config (if you ever add secrets.toml, keep it out of git)
 .streamlit/secrets.toml
-
-*.eml
-data/
-original_source/
+reproduction/repair_v2/models/
+reproduction/repair_v2/results/
+reproduction/repair_v2/references/
+*.csv
+!results/email_authored_probes_predictions.csv

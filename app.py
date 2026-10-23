@@ -11,9 +11,9 @@ try:url_model,email_model=load_models()
 except Exception as ex:
  st.error('Models could not be loaded. Use the matching project files.');st.stop()
 def show(result,reason=None):
- if reason:st.warning('Review needed: '+reason)
- elif result['predicted_label']:st.error('Potential phishing')
+ if result['predicted_label']:st.error('Potential phishing')
  else:st.success('Likely legitimate')
+ if reason:st.warning('Review needed: '+reason)
  st.metric('Phishing score',f"{result['score']*100:.1f}/100")
  st.caption('Lower scores indicate fewer signs of phishing; higher scores indicate more.')
  with st.expander('About this result'):
@@ -54,3 +54,4 @@ with tab_email:
    except ValueError as ex:st.error(str(ex))
 st.divider()
 st.caption('Research prototype. Predictions may be incorrect. Verify suspicious requests directly with your bank.')
+

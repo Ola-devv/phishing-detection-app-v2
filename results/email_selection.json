@@ -1,0 +1,15 @@
+{
+  "selected": "LR",
+  "provenance": {
+    "historical_train": 22889,
+    "authored_train": 1344,
+    "authored_validation": 560,
+    "raw_bank_mailbox_retested": false,
+    "external_phishing_mailbox_retested": false
+  },
+  "rule": "Validation constraints documented in REPAIR_RESULTS.md; historical test and inspected regressions never choose thresholds.",
+  "limitations": [
+    "Previously inspected historical development partitions, not a fresh final benchmark.",
+    "Authored examples/derived paths are not verified Nigerian banking benchmark data."
+  ]
+}

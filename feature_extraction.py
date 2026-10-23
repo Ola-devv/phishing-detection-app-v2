@@ -14,7 +14,8 @@ def get_url_risk_factors(url):
  return out
 def get_email_risk_factors(subject,body,sender=None):
  v=e.extract_email(subject or '',body or '');risks=[];warnings=[]
- if v['credential_request_count']:risks.append('Credential-request or verification phrases appear.')
+ if v['direct_secret_request_count']:risks.append('A request for sensitive banking information appears.')
  if v['urgency_density']:risks.append('Urgency wording appears.')
  if v['security_warning_count']:warnings.append('Security-warning wording appears; attackers may also copy it.')
  return risks,warnings
+

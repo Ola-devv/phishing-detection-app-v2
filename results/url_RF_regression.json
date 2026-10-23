@@ -1,0 +1,254 @@
+[
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "Access homepage",
+    "expected": 0,
+    "url": "https://www.accessbankplc.com/",
+    "score": 0.05302154322379248,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "Access contact",
+    "expected": 0,
+    "url": "https://www.accessbankplc.com/contact-us",
+    "score": 0.1646099894248679,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "Access about",
+    "expected": 0,
+    "url": "https://www.accessbankplc.com/about-us/our-profile",
+    "score": 0.01571825357956168,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "GTBank homepage",
+    "expected": 0,
+    "url": "https://www.gtbank.com/",
+    "score": 0.04460015991704602,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "GTBank contact",
+    "expected": 0,
+    "url": "https://www.gtbank.com/help-centre/contact-us",
+    "score": 0.041604695864290824,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "GTBank banking",
+    "expected": 0,
+    "url": "https://www.gtbank.com/personal-banking/ways-to-bank/internet-banking",
+    "score": 0.382965476229194,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "Zenith homepage",
+    "expected": 0,
+    "url": "https://www.zenithbank.com/",
+    "score": 0.021898550290751512,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "Zenith customer service",
+    "expected": 0,
+    "url": "https://www.zenithbank.com/customer-service/",
+    "score": 0.08698284561959152,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "Zenith careers",
+    "expected": 0,
+    "url": "https://www.zenithbank.com/about-us/careers/",
+    "score": 0.01895673365355251,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "UBA homepage",
+    "expected": 0,
+    "url": "https://www.ubagroup.com/",
+    "score": 0.015281398097392757,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "UBA Nigeria",
+    "expected": 0,
+    "url": "https://www.ubagroup.com/nigeria/",
+    "score": 0.12866846049729766,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "official_bank",
+    "name": "UBA help",
+    "expected": 0,
+    "url": "https://www.ubagroup.com/nigeria/help/",
+    "score": 0.09811251551911365,
+    "predicted": 0
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Brand in unrelated subdomain",
+    "expected": 1,
+    "url": "https://accessbankplc.com.account-review.invalid/verify",
+    "score": 0.9057454881845354,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Userinfo hides actual host",
+    "expected": 1,
+    "url": "https://www.accessbankplc.com@account-review.invalid/login",
+    "score": 0.9204669903770639,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "GTBank imitation",
+    "expected": 1,
+    "url": "https://gtbank-secure.invalid/update-bvn",
+    "score": 0.9011800665452179,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Zenith imitation",
+    "expected": 1,
+    "url": "https://zenithbank-verify.invalid/login",
+    "score": 0.9310654137370242,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "UBA imitation",
+    "expected": 1,
+    "url": "https://uba-account.invalid/confirm",
+    "score": 0.9415852053816852,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "IP credential path",
+    "expected": 1,
+    "url": "http://192.0.2.10/accessbank/login",
+    "score": 0.9884848484848483,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Encoded credential path",
+    "expected": 1,
+    "url": "https://account-check.invalid/%76%65%72%69%66%79?bvn=12345",
+    "score": 0.8732585062552929,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Plain account impersonation",
+    "expected": 1,
+    "url": "https://accessbankplc-login.invalid",
+    "score": 0.7377084583651606,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Brand in path",
+    "expected": 1,
+    "url": "https://portal.invalid/accessbankplc/verify",
+    "score": 0.67311917361934,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Bank suffix trap",
+    "expected": 1,
+    "url": "https://evilgtbank.com.invalid/login",
+    "score": 0.9430622594878106,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Polished short imitation",
+    "expected": 1,
+    "url": "https://access-update.invalid",
+    "score": 0.6590043532260993,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Generic sign-in",
+    "expected": 1,
+    "url": "https://secure-check.invalid/signin",
+    "score": 0.9168073491246702,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "HTTPS account pressure",
+    "expected": 1,
+    "url": "https://banking-review.invalid/account/suspended",
+    "score": 0.7769400643006015,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Long query trap",
+    "expected": 1,
+    "url": "https://check.invalid/confirm?bank=accessbank&action=verify&otp=required",
+    "score": 0.9570866212954532,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "GTBank userinfo",
+    "expected": 1,
+    "url": "https://gtbank.com@verify.invalid/otp",
+    "score": 0.8730154719133676,
+    "predicted": 1
+  },
+  {
+    "kind": "url",
+    "group": "constructed_impersonation",
+    "name": "Quiet unrelated host",
+    "expected": 1,
+    "url": "https://notice.invalid/continue",
+    "score": 0.9159525902319374,
+    "predicted": 1
+  }
+]

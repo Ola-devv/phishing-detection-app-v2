@@ -1,0 +1,14 @@
+{
+  "selected": "XGB",
+  "provenance": {
+    "historical_train": 183045,
+    "derived_train": 10000,
+    "derived_validation": 1500,
+    "bank_allowlist": false
+  },
+  "rule": "Validation constraints documented in REPAIR_RESULTS.md; historical test and inspected regressions never choose thresholds.",
+  "limitations": [
+    "Previously inspected historical development partitions, not a fresh final benchmark.",
+    "Authored examples/derived paths are not verified Nigerian banking benchmark data."
+  ]
+}

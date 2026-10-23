@@ -1,31 +1,18 @@
-# Phishing Detection System
-Research prototype for Nigerian financial institutions, adapted from the original URL and email Streamlit application.
+# Nigerian financial institution phishing detector
+The existing URL/email application now uses the repaired, validated model pair. The repository owner approved publishing the selected bundles and evaluation results on 23 October 2026. Raw emails, datasets and split references remain private.
 
-## Run
-Use Python 3.12, install `requirements.txt`, then run:
 ```bash
 python -m pip install -r requirements.txt
+python -m unittest -q test_release.py
 streamlit run app.py
 ```
 
-## Models used by the app
-- URL: Logistic Regression, frozen validation threshold 0.878675231262895.
-- Email: XGBoost, frozen validation threshold 0.6766026020050049, with TF-IDF and 20 engineered features.
-- `inference.py` checks the saved feature schema and feature-code hashes. Keep the model bundles, feature modules and mailbox reader together.
-- These choices follow the recorded validation rules. They are not claims that the selected algorithm wins on every inspected test cohort.
+The app uses XGBoost for URLs (35 features, threshold 0.6046873927116394) and Logistic Regression for email (8,000 TF-IDF features plus 10 engineered inputs, threshold 0.629481294875887). See REPAIR_RESULTS.md for all algorithms, known failures and changed validation. This is a research demonstration; scores are uncalibrated and predictions may be wrong.
 
-The displayed score is uncalibrated, not a verified probability of phishing. No alert does not establish safety. Manual-review notices do not alter the saved binary prediction. Links are not visited, sender identities are not authenticated, and bank ownership is not verified.
-
-## Verification
+For retraining, put the original master_email_dataset_v2.csv and master_url_dataset.csv under data/. Extract Private_Reproduction_References.zip into the project root to populate data/reproduction_refs. Keep all these files private. Then:
 ```bash
-python -m unittest -q test_release.py
+python reproduction/repair_v2/train_candidates.py email
+python reproduction/repair_v2/train_candidates.py url
+python reproduction/repair_v2/fresh_checks.py
 ```
-Six integration checks cover schema and thresholds, saved authored-probe reproduction, MIME hidden links, malformed URLs and domain boundaries, and separation of review notices from model predictions. Authored cases are constructed diagnostics, not independent banking benchmark evidence.
-
-## Deployment
-Streamlit Community Cloud uses this repository, branch `main`, entrypoint `app.py`. Commit changes to the connected branch to update the app. The new `*_bundle.joblib` files are ordinary small Git blobs; older model files remain as historical assets and are not loaded by the current app.
-
-No raw private emails or training mailboxes are included. The earlier application remains available in Git history, including commit `5337eae8d929b9fa2948f9392b0ce640e58eec01`. The full evaluation review and Colab notebook are supplied separately.
-
-## Limitations
-The genuine Nigerian banking diagnostic is small and negative-only. Historical scores do not establish Nigerian banking accuracy. Source/class confounding, approximate family grouping and repeated development inspection limit generalization claims. Remove confidential information before submitting demo inputs and verify suspicious requests through a known official bank channel.
+Candidate training never automatically replaces the app models. The original raw-bank and external-phishing mailbox evaluations are not reproduced by these runs. Earlier source and model versions remain in Git history. The thesis review copy needs corresponding updates.
