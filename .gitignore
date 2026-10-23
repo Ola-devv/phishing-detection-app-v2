@@ -16,3 +16,7 @@ Thumbs.db
 
 # Streamlit local config (if you ever add secrets.toml, keep it out of git)
 .streamlit/secrets.toml
+
+*.eml
+data/
+original_source/

@@ -1,0 +1,74 @@
+[
+  [
+    "protective_warning",
+    0,
+    "Security notice",
+    "Please note that we will never ask you for your OTP, BVN, PIN or password. Do not share these with anyone."
+  ],
+  [
+    "passive_warning",
+    0,
+    "Security notice",
+    "Your password, card numbers and PIN are private and should never be disclosed to anyone. FCMB will never ask you for these details."
+  ],
+  [
+    "transaction_notice",
+    0,
+    "Transaction notification",
+    "A transaction has occurred on your account. If you do not recognize this transaction, contact customer support using the phone number on your bank card. We will never ask for your PIN."
+  ],
+  [
+    "normal_meeting",
+    0,
+    "Team meeting",
+    "Hello everyone, the project meeting is scheduled for Monday at 10 am. Please review the report before the meeting. Thank you."
+  ],
+  [
+    "ordinary_receipt",
+    0,
+    "Payment received",
+    "Thank you for your payment. Your order has been processed and a receipt is attached. Contact us if you have questions."
+  ],
+  [
+    "otp_notification",
+    0,
+    "Your verification code",
+    "Your one-time verification code is 123456. It expires in five minutes. Do not share this code with anyone. If you did not request it, ignore this message."
+  ],
+  [
+    "security_education",
+    0,
+    "How to identify phishing",
+    "Fraudsters may ask you to enter your OTP or click here to verify your account. Never respond to these messages. Report suspicious links through your bank support team."
+  ],
+  [
+    "credential_request",
+    1,
+    "Urgent account verification",
+    "URGENT: Your account is suspended. Click here to verify and enter your OTP immediately to restore access."
+  ],
+  [
+    "copied_disclaimer_attack",
+    1,
+    "Security verification",
+    "We will never ask for your OTP by telephone. To restore your suspended account, enter your OTP and password at https://account-restore.example/verify immediately."
+  ],
+  [
+    "calm_credential_request",
+    1,
+    "Account update",
+    "Please provide your password and OTP at https://customer-update.example/ so that we can complete the update to your banking profile."
+  ],
+  [
+    "prize_payment",
+    1,
+    "Reward payment",
+    "You have won a cash reward. Send your card PIN and OTP to claim the payment today."
+  ],
+  [
+    "polite_credential_request",
+    1,
+    "Customer support",
+    "Hello, please share your OTP with us to resolve the problem on your account. Thank you for your cooperation."
+  ]
+]

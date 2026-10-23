@@ -1,159 +1,55 @@
-# ============================================================
-# app.py — Phishing Detection System (URL + Email)
-# URL model: Random Forest (v3 features)
-# Email model: XGBoost (v2 features + TF-IDF)
-#
-# IMPORTANT: feature_extraction.py must sit in the same folder —
-# it is the single source of truth for how features are computed,
-# shared between training and this app, so predictions here match
-# training exactly.
-# ============================================================
+# Adapted from the uploaded app.py: same URL and email checking workflow.
 import streamlit as st
-import joblib
-import pandas as pd
-from scipy.sparse import hstack, csr_matrix
-
-from feature_extraction import (
-    url_features_to_vector,
-    email_features_to_vector,
-    clean_text_for_tfidf,
-    get_risk_level,
-    get_url_risk_factors,
-    get_email_risk_factors,
-)
-
-MODEL_DIR = "models"  # folder containing all .joblib files, relative to this app.py
-
-# ── Load all models once, cached across requests ────────────────
+from inference import load_bundle,score,score_message,review_reason
+from feature_extraction import get_url_risk_factors,get_email_risk_factors
+st.set_page_config(page_title='Phishing Detection System',page_icon='🛡️')
+st.title('🛡️ Phishing Detection System')
+st.caption('Research prototype for Nigerian financial institutions')
 @st.cache_resource
-def load_models():
-    url_model = joblib.load(f"{MODEL_DIR}/url_model_random_forest.joblib")
-
-    email_model = joblib.load(f"{MODEL_DIR}/email_model_v2_xgboost.joblib")
-    email_tfidf = joblib.load(f"{MODEL_DIR}/email_tfidf_vectorizer_v2.joblib")
-    email_engineered_cols = joblib.load(f"{MODEL_DIR}/email_engineered_cols_v2.joblib")
-
-    return url_model, email_model, email_tfidf, email_engineered_cols
-
-try:
-    url_model, email_model, email_tfidf, email_engineered_cols = load_models()
-    models_loaded = True
-    load_error = None
-except Exception as e:
-    models_loaded = False
-    load_error = str(e)
-
-# ── Prediction functions ─────────────────────────────────────────
-def predict_url(url):
-    vec = url_features_to_vector(url)
-    prob = url_model.predict_proba(vec)[0][1]
-    return float(prob)
-
-def predict_email(subject, body, sender=None):
-    text_clean = clean_text_for_tfidf((subject or '') + ' ' + (body or ''))
-    tfidf_vec = email_tfidf.transform([text_clean])
-    eng_vec = email_features_to_vector(subject, body, sender)
-    # column order in eng_vec must match email_engineered_cols exactly —
-    # email_features_to_vector already enforces this via EMAIL_FEATURE_ORDER
-    combined = hstack([tfidf_vec, csr_matrix(eng_vec.values)]).tocsr()
-    prob = email_model.predict_proba(combined)[0][1]
-    return float(prob)
-
-# ── UI ────────────────────────────────────────────────────────────
-st.set_page_config(page_title="Phishing Detection System", page_icon="🛡️")
-st.title("🛡️ Phishing Detection System")
-st.caption("URL detection: Random Forest · Email detection: XGBoost")
-
-if not models_loaded:
-    st.error(
-        "Models failed to load. Check that the 'models' folder is present "
-        "alongside app.py and contains all required .joblib files.\n\n"
-        f"Error: {load_error}"
-    )
-    st.stop()
-
-tab_url, tab_email = st.tabs(["🔗 Check a URL", "📧 Check an Email"])
-
+def load_models():return load_bundle('url'),load_bundle('email')
+try:url_model,email_model=load_models()
+except Exception as ex:
+ st.error('Models could not be loaded. Use the matching project files.');st.stop()
+def show(result,reason=None):
+ st.metric('Model phishing score',f"{result['score']*100:.1f}/100")
+ st.progress(result['score'])
+ if reason:st.warning('Review needed: '+reason)
+ elif result['predicted_label']:st.warning('Potential phishing. Verify through a known official channel.')
+ else:st.info('No alert raised. This does not establish that the message or URL is safe.')
+ with st.expander('Model decision and limitations'):
+  st.write('Binary model alert: '+('phishing' if result['predicted_label'] else 'no phishing alert'))
+  st.write(f"Saved decision threshold: {result['threshold']*100:.2f}/100")
+  st.write('The score is uncalibrated. Links are not visited, senders are not authenticated, and bank ownership is not verified. Observed indicators are not a complete explanation of the prediction.')
+tab_url,tab_email=st.tabs(['🔗 Check a URL','📧 Check an Email'])
 with tab_url:
-    url_input = st.text_input("Enter a URL to check", placeholder="https://example.com/login")
-    if st.button("Analyze URL", key="url_btn"):
-        if not url_input.strip():
-            st.warning("Please enter a URL.")
-        else:
-            prob = predict_url(url_input)
-            pct = prob * 100
-            risk_label, risk_color = get_risk_level(prob)
-
-            st.markdown(f"### Risk Score: {pct:.1f}/100 — :{risk_color}[{risk_label}]")
-            st.progress(float(min(max(prob, 0.0), 1.0)))
-
-            if prob >= 0.5:
-                st.error(f"⚠️ Likely PHISHING")
-            else:
-                st.success(f"✅ Likely LEGITIMATE")
-
-            reasons = get_url_risk_factors(url_input)
-            if reasons:
-                st.markdown("**Contributing factors:**")
-                for r in reasons:
-                    st.markdown(f"- {r}")
-            else:
-                st.markdown("_No notable risk indicators detected._")
-
+ url_input=st.text_input('Enter a URL to check',placeholder='https://example.com/login')
+ if st.button('Analyze URL',key='url_btn'):
+  try:
+   result=score(url_model,url=url_input);show(result)
+   for r in get_url_risk_factors(url_input):st.write('• '+r)
+  except ValueError as ex:st.error(str(ex))
 with tab_email:
-    subject_input = st.text_input("Email subject (optional)", key="email_subject")
-    sender_input = st.text_input("Sender email address (optional)", key="email_sender",
-                                   placeholder="alerts@examplebank.com")
-    body_input = st.text_area("Email body", height=200, key="email_body",
-                                placeholder="Paste the email content here...")
-    if st.button("Analyze Email", key="email_btn"):
-        if not body_input.strip():
-            st.warning("Please enter the email body.")
-        else:
-            prob = predict_email(subject_input, body_input, sender_input)
-            pct = prob * 100
-            risk_label, risk_color = get_risk_level(prob)
-
-            st.markdown(f"### Risk Score: {pct:.1f}/100 — :{risk_color}[{risk_label}]")
-            st.progress(float(min(max(prob, 0.0), 1.0)))
-
-            if prob >= 0.5:
-                st.error(f"⚠️ Likely PHISHING")
-            else:
-                st.success(f"✅ Likely LEGITIMATE")
-
-            reasons = get_email_risk_factors(subject_input, body_input, sender_input)
-            risk_reasons, protective_reasons = reasons
-
-            if risk_reasons:
-                st.markdown("**⚠️ Risk factors:**")
-                for r in risk_reasons:
-                    st.markdown(f"- {r}")
-            if protective_reasons:
-                st.markdown("**✅ Protective factors:**")
-                for r in protective_reasons:
-                    st.markdown(f"- {r}")
-            if not risk_reasons and not protective_reasons:
-                st.markdown("_No notable engineered risk indicators detected._")
-
-            # Be honest when the score doesn't line up with the listed
-            # factors — this happens because most of the model's
-            # decision comes from word-pattern (TF-IDF) analysis of the
-            # full text, which isn't reduced to a simple checklist here.
-            if prob >= 0.5 and not risk_reasons:
-                st.caption(
-                    "ℹ️ This risk score is driven mainly by overall word-pattern analysis "
-                    "of the email text, not the specific factors listed above."
-                )
-            elif prob < 0.5 and protective_reasons and risk_reasons:
-                st.caption(
-                    "ℹ️ Both risk and protective signals were present; the overall "
-                    "word-pattern analysis of the text was the deciding factor."
-                )
-
+ mode=st.radio('Email input',['Paste text','Upload .eml'],horizontal=True)
+ subject_input='';body_input='';raw=None
+ if mode=='Paste text':
+  subject_input=st.text_input('Email subject (optional)',key='email_subject')
+  body_input=st.text_area('Email body',height=220,key='email_body')
+ else:
+  upload=st.file_uploader('Email file',type=['eml'])
+  if upload:raw=upload.getvalue()
+ if st.button('Analyze Email',key='email_btn'):
+  if mode=='Paste text' and not body_input.strip():st.warning('Please enter the email body.')
+  elif mode=='Upload .eml' and raw is None:st.warning('Please upload an .eml file.')
+  else:
+   try:
+    if raw is not None:
+     result,msg=score_message(email_model,raw);subject_input=msg['subject'];body_input=msg['model_body']
+    else:result=score(email_model,subject=subject_input,body=body_input)
+    show(result,review_reason(result,subject_input,body_input))
+    risk,protective=get_email_risk_factors(subject_input,body_input)
+    if risk or protective:
+     st.write('Observed language indicators')
+     for r in risk+protective:st.write('• '+r)
+   except ValueError as ex:st.error(str(ex))
 st.divider()
-st.caption(
-    "This tool provides a probability estimate, not a certainty. "
-    "Always verify suspicious messages directly with your bank through "
-    "official channels before taking any action."
-)
+st.caption('Remove confidential information before submitting text. Images and PDF attachments are not assessed. Verify suspicious requests directly with your bank through a known official channel.')
