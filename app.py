@@ -11,22 +11,23 @@ try:url_model,email_model=load_models()
 except Exception as ex:
  st.error('Models could not be loaded. Use the matching project files.');st.stop()
 def show(result,reason=None):
- st.metric('Model phishing score',f"{result['score']*100:.1f}/100")
- st.progress(result['score'])
  if reason:st.warning('Review needed: '+reason)
- elif result['predicted_label']:st.warning('Potential phishing. Verify through a known official channel.')
- else:st.info('No alert raised. This does not establish that the message or URL is safe.')
- with st.expander('Model decision and limitations'):
-  st.write('Binary model alert: '+('phishing' if result['predicted_label'] else 'no phishing alert'))
-  st.write(f"Saved decision threshold: {result['threshold']*100:.2f}/100")
-  st.write('The score is uncalibrated. Links are not visited, senders are not authenticated, and bank ownership is not verified. Observed indicators are not a complete explanation of the prediction.')
+ elif result['predicted_label']:st.error('Potential phishing')
+ else:st.success('Likely legitimate')
+ st.metric('Phishing score',f"{result['score']*100:.1f}/100")
+ st.caption('Lower scores indicate fewer signs of phishing; higher scores indicate more.')
+ with st.expander('About this result'):
+  st.write('This is a model prediction, not a guarantee of safety. The score is not a verified percentage chance of phishing. The app analyses URL patterns and readable email text; it does not authenticate senders or inspect website content.')
 tab_url,tab_email=st.tabs(['🔗 Check a URL','📧 Check an Email'])
 with tab_url:
  url_input=st.text_input('Enter a URL to check',placeholder='https://example.com/login')
  if st.button('Analyze URL',key='url_btn'):
   try:
    result=score(url_model,url=url_input);show(result)
-   for r in get_url_risk_factors(url_input):st.write('• '+r)
+   indicators=get_url_risk_factors(url_input)
+   if indicators:
+    with st.expander('URL indicators'):
+     for r in indicators:st.write('• '+r)
   except ValueError as ex:st.error(str(ex))
 with tab_email:
  mode=st.radio('Email input',['Paste text','Upload .eml'],horizontal=True)
@@ -48,8 +49,8 @@ with tab_email:
     show(result,review_reason(result,subject_input,body_input))
     risk,protective=get_email_risk_factors(subject_input,body_input)
     if risk or protective:
-     st.write('Observed language indicators')
-     for r in risk+protective:st.write('• '+r)
+     with st.expander('Language indicators'):
+      for r in risk+protective:st.write('• '+r)
    except ValueError as ex:st.error(str(ex))
 st.divider()
-st.caption('Remove confidential information before submitting text. Images and PDF attachments are not assessed. Verify suspicious requests directly with your bank through a known official channel.')
+st.caption('Research prototype. Predictions may be incorrect. Verify suspicious requests directly with your bank.')

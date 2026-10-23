@@ -11,7 +11,6 @@ def get_url_risk_factors(url):
  if v['has_userinfo']:out.append('User information appears before the destination hostname.')
  if v['has_ip']:out.append('Destination hostname is an IP address.')
  if v['punycode_host']:out.append('Hostname uses internationalized domain encoding.')
- if v['brand_in_host'] or v['brand_in_path']:out.append('A financial brand name appears; ownership is unverified.')
  return out
 def get_email_risk_factors(subject,body,sender=None):
  v=e.extract_email(subject or '',body or '');risks=[];warnings=[]
