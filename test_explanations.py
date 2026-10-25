@@ -26,7 +26,8 @@ class ExplanationChecks(unittest.TestCase):
    self.check_explanation(self.email,subject=row['subject'],body=row['body'])
  def test_specific_destination_and_no_bank_verification(self):
   info=self.check_explanation(self.url,url='https://accessbankplc.com@unrelated.invalid/verify')
-  self.assertIn('Registered domain: unrelated.invalid',info['observations'][0])
+  self.assertIn('Destination hostname: unrelated.invalid',info['observations'][0])
+  self.assertIn('could not resolve a registered domain',info['observations'][0])
   self.assertIn('actual destination is unrelated.invalid',info['observations'][1])
  def test_request_and_negation_are_distinct(self):
   malicious=self.check_explanation(self.email,body='Send your PIN and CVV to our agent now.')

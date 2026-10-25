@@ -69,8 +69,8 @@ def _contributions(bundle, X):
  return baseline,np.asarray(contributions,dtype=float)
 
 def _url_evidence(url, v):
- _,p,host=u.parse_url(url);domain=u.url_group(url)
- out=[f'Destination hostname: {host}. Registered domain: {domain}.']
+ _,p,host=u.parse_url(url);domain=u.PSL(host).top_domain_under_public_suffix
+ out=[f'Destination hostname: {host}. '+(f'Registered domain: {domain}.' if domain else 'The offline suffix list could not resolve a registered domain.')]
  if v['has_userinfo']:out.append(f'The text before @ is user information. The actual destination is {host}.')
  if v['has_ip']:out.append('The hostname is an IP address rather than a named domain.')
  if v['punycode_host']:out.append('At least one hostname label uses xn-- internationalised encoding. This alone does not prove impersonation.')
