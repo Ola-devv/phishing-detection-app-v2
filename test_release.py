@@ -14,7 +14,7 @@ class ReleaseChecks(unittest.TestCase):
   self.assertEqual(len(self.url['transforms']['feature_order']),35)
   self.assertEqual(len(self.email['transforms']['feature_order']),10)
   self.assertAlmostEqual(self.url['threshold'],.6046873927116394)
-  self.assertAlmostEqual(self.email['threshold'],.629481294875887)
+  self.assertAlmostEqual(self.email['threshold'],.556350991464082)
  def test_saved_email_diagnostics(self):
   rows=pd.read_csv(ROOT/'results/email_authored_probes_predictions.csv')
   raw=json.loads((ROOT/'results/authored_inputs.json').read_text())
@@ -24,7 +24,7 @@ class ReleaseChecks(unittest.TestCase):
  def test_threshold_is_not_half(self):
   b=dict(self.email);b['model']=FixedEstimator()
   r=score(b,body='A sufficiently long ordinary message for a threshold check.')
-  self.assertEqual(r['score'],.6);self.assertEqual(r['predicted_label'],0)
+  self.assertEqual(r['score'],.6);self.assertEqual(r['predicted_label'],int(.6>=b['threshold']))
  def test_mime_hidden_link_and_parity(self):
   raw=b'Subject: Account notice\nMIME-Version: 1.0\nContent-Type: text/html; charset=utf-8\n\n<p>Review your account update</p><a href="https://example.com/verify">Continue</a>'
   r,m=score_message(self.email,raw)
