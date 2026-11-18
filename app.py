@@ -4,17 +4,18 @@ from inference import load_bundle,score,score_message,review_reason
 from result_explanations import explain
 st.set_page_config(page_title='Phishing Detection System',page_icon='🛡️')
 st.title('🛡️ Phishing Detection System')
-st.caption('Research prototype for Nigerian financial institutions')
+st.caption('Research prototype for Nigerian financial institutions · Collected-data models')
+st.caption('Model release: collected-data-v1')
 @st.cache_resource
-def load_models(release='email-20261026-v1'):return load_bundle('url'),load_bundle('email')
+def load_models(release='collected-data-v1'):return load_bundle('url'),load_bundle('email')
 try:url_model,email_model=load_models()
 except Exception as ex:
  st.error('Models could not be loaded. Use the matching project files.');st.stop()
 def show(result,reason=None):
- if result['predicted_label']:st.error('Potential phishing')
- else:st.success('Likely legitimate')
- if reason:st.warning('Review needed: '+reason)
- st.metric('Phishing score',f"{result['score']*100:.1f}/100")
+ if reason:st.warning('Needs review: '+reason)
+ elif result['predicted_label']:st.error('Potential phishing')
+ else:st.info('No phishing flag from the model')
+ st.metric('Model phishing score',f"{result['score']*100:.1f}/100")
  st.caption('Lower scores indicate fewer signs of phishing; higher scores indicate more.')
  with st.expander('About this result'):
   st.write('This is a model prediction, not a guarantee of safety. The score is not a verified percentage chance of phishing. The app analyses URL patterns and readable email text; it does not authenticate senders or inspect website content.')

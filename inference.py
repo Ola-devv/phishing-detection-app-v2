@@ -32,6 +32,7 @@ def review_reason(result,subject,body):
  if len(e.clean_text(body).split())<8:return 'Too little readable text for a dependable assessment.'
  if not result['predicted_label'] and v['direct_secret_request_count']:return 'A sensitive-information request conflicts with the lower model score.'
  warning=any(p.search(((subject or '')+' '+(body or '')).lower()) for p in e.WARN)
+ if result['predicted_label'] and v['transaction_notice_count'] and not v['direct_secret_request_count']:return 'Transaction wording conflicts with the model alert. Check the transaction in your banking app.'
  if result['predicted_label'] and (warning or v['educational_secret_request_count']) and not v['direct_secret_request_count']:return 'Protective or educational wording conflicts with the model alert.'
  return None
 
