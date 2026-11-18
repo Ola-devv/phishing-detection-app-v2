@@ -1,18 +1,12 @@
 # Nigerian financial institution phishing detector
 
-The `collected-data-v1` research prototype uses XGBoost for URLs and Logistic Regression for email. The revised training and validation used collected public datasets and authentic inbox records, with no generated examples. The repository does not include the raw inbox, master datasets or private split records.
+The Streamlit prototype uses XGBoost for URLs and Logistic Regression for email. The email classifier was fitted on 22,889 public emails, 94 genuine banking inbox emails and 2,426 fraud-labelled messages from Nigerian_Fraud.csv. No generated emails were used. Raw email messages and private split records are not included in the repository.
 
-| Task | Model | Threshold | Historical test accuracy | Phishing F1 |
+| Task | Model | Threshold | Public test accuracy | Phishing F1 |
 |---|---|---:|---:|---:|
-| Email | Logistic Regression | 0.525960 | 99.79% | 97.29% |
+| Email | Logistic Regression | 0.668639 | 99.76% | 96.77% |
 | URL | XGBoost | 0.686150 | 96.90% | 97.35% |
 
-The figures describe raw binary outputs on the previously inspected historical test splits. They do not establish performance on representative Nigerian banking traffic. The email model cleared 11 of 12 reserved legitimate bank emails. When recognised warning, transaction or sensitive-request wording conflicts with the email score, the interface can show **Needs review**. This display safeguard does not change model scores or benchmark metrics. A lower score does not establish safety.
+The email model did not flag any of the 12 held-out genuine banking emails and flagged 802 of 810 separately held-out fraud-labelled emails. Similar fraud templates were grouped before splitting. The fraud flag rate is not recall on verified Nigerian banking phishing. The original public partitions were inspected during development. A low score does not verify that an input is safe.
 
-```bash
-python -m pip install -r requirements.txt
-python -m unittest test_release.py test_explanations.py
-streamlit run app.py
-```
-
-`REPAIR_RESULTS.md`, `Repair_Candidate_Colab.ipynb`, and the other files under `reproduction/repair_v2/` describe an earlier experiment. Their results and constructed diagnostics are historical and are not inputs to the current models.
+Run locally with `streamlit run app.py`. The deployment aggregate email results are in `results/email_final.json`; files under `results/collected-data-v1/` and `reproduction/repair_v2/` document earlier runs.
