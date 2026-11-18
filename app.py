@@ -6,7 +6,7 @@ st.set_page_config(page_title='Phishing Detection System',page_icon='🛡️')
 st.title('🛡️ Phishing Detection System')
 st.caption('Research prototype for Nigerian financial institutions')
 @st.cache_resource
-def load_models(release='collected-data-v1'):return load_bundle('url'),load_bundle('email')
+def load_models(release='nigerian-fraud-final'):return load_bundle('url'),load_bundle('email')
 try:url_model,email_model=load_models()
 except Exception as ex:
  st.error('Models could not be loaded. Use the matching project files.');st.stop()
