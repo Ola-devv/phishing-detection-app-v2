@@ -4,25 +4,24 @@ from inference import load_bundle,score,score_message,review_reason
 from result_explanations import explain
 st.set_page_config(page_title='Phishing Detection System',page_icon='🛡️')
 st.title('🛡️ Phishing Detection System')
-st.caption('Research prototype for Nigerian financial institutions · Collected-data models')
-st.caption('Model release: collected-data-v1')
+st.caption('Research prototype for Nigerian financial institutions')
 @st.cache_resource
 def load_models(release='collected-data-v1'):return load_bundle('url'),load_bundle('email')
 try:url_model,email_model=load_models()
 except Exception as ex:
  st.error('Models could not be loaded. Use the matching project files.');st.stop()
 def show(result,reason=None):
- if reason:st.warning('Needs review: '+reason)
- elif result['predicted_label']:st.error('Potential phishing')
- else:st.info('No phishing flag from the model')
+ if result['predicted_label']:st.error('Model classification: Potential phishing')
+ else:st.info('Model classification: Likely legitimate')
+ if reason:st.warning(reason)
  st.metric('Model phishing score',f"{result['score']*100:.1f}/100")
  st.caption('Lower scores indicate fewer signs of phishing; higher scores indicate more.')
  with st.expander('About this result'):
+  st.write(f"Phishing cutoff: {result['threshold']*100:.2f}/100. A score at or above the cutoff is classified as potential phishing.")
   st.write('This is a model prediction, not a guarantee of safety. The score is not a verified percentage chance of phishing. The app analyses URL patterns and readable email text; it does not authenticate senders or inspect website content.')
 def show_explanation(bundle,result,**inputs):
  info=explain(bundle,result,**inputs)
  st.subheader('Why this result?')
- st.write(info['summary'])
  st.write('Detected in this input')
  for item in info['observations'][:3]:st.text('• '+item)
  if info['available']:
@@ -62,7 +61,10 @@ with tab_email:
     if raw is not None:
      result,msg=score_message(email_model,raw);subject_input=msg['subject'];body_input=msg['model_body']
     else:result=score(email_model,subject=subject_input,body=body_input)
-    show(result,review_reason(result,subject_input,body_input))
+    reason=review_reason(result,subject_input,body_input)
+    if reason and reason.startswith('Transaction wording'):
+     reason='This reads like a routine transaction alert. Check the transaction directly in your banking app.'
+    show(result,reason)
     show_explanation(email_model,result,subject=subject_input,body=body_input)
    except ValueError as ex:st.error(str(ex))
 st.divider()
